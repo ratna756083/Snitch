@@ -1,11 +1,11 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import connectDB from "./config/database.js";
 import authRoutes from "./routes/auth.routes.js"
 import passport from "passport"
 import {Strategy as GoogleStrategy} from "passport-google-oauth20"
 import { config } from "./config/config.js"
+import productRoutes from './routes/product.routes.js'
 
 
 
@@ -18,7 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 app.use(morgan("dev"));
-connectDB();
 
 app.use(passport.initialize())
 passport.use(new GoogleStrategy({
@@ -31,6 +30,7 @@ passport.use(new GoogleStrategy({
 
 
 app.use("/api/auth",authRoutes)
+app.use("/api/products",productRoutes)
 
 
 

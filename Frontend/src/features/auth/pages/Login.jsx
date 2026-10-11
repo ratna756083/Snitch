@@ -455,7 +455,9 @@ const Login = () => {
             </div>
 
             {/* Google OAuth */}
-            <button
+            <button  onClick={()=>{
+              window.location.href="/api/auth/google"
+            }}
               type="button"
               className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl transition-all active:scale-[0.98]"
               style={{ backgroundColor: '#171714', border: '1px solid rgba(255,255,255,0.10)', color: '#e5e2de' }}
