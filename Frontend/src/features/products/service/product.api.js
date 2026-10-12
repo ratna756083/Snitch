@@ -14,3 +14,13 @@ export async function getSellerProducts(){
     const responce=await ProductApi.get("/seller")
     return responce.data
 }
+
+export async function getAllProducts(){
+    const responce=await ProductApi.get("/")
+    return responce.data
+}
+
+export async function getProductDetail(Id){
+    const responce =await ProductApi.get(`/details/${Id}`)
+    return responce.data
+}

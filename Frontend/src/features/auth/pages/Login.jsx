@@ -37,8 +37,12 @@ const Login = () => {
     setError('')
     setIsSubmitting(true)
     try {
-      await handelLogin(form)
+    const user= await handelLogin(form)
+    if(user.role == "buyer"){
       navigate("/")
+    }else if(user.role == "seller"){
+      navigate("/seller/dashboard")
+    }
     } catch (requestError) {
       const validationError = requestError.response?.data?.errors?.[0]?.msg
       setError(

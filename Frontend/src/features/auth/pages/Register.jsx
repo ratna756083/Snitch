@@ -66,8 +66,12 @@ const Register = () => {
     setIsRegistered(false)
     setIsSubmitting(true)
     try {
-      await handleRegister(form)
+    const user=  await handleRegister(form)
+    if(user.role == "buyer"){
       navigate("/")
+    }else if(user.role == "seller"){
+      navigate("/seller/dashboard")
+    }
       setIsRegistered(true)
       setForm(initialForm)
     } catch (requestError) {

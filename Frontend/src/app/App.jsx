@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { RouterProvider } from 'react-router'
-import { Provider } from 'react-redux'
 import { routes } from './app.routes'
+import { useAuth } from '../features/auth/hooks/useAuth'
+import { useSelector } from 'react-redux'
 
-const App = ({ store }) => {
+const App = () => {
+
+  const {handelGetMe}=useAuth()
+  const user=useSelector(state=>state.auth.user)
+  console.log(user)
+  useEffect(()=>{
+    handelGetMe()
+  },[])
   return <> 
-  <Provider store={store}>
+    
     <RouterProvider router={routes}/>
-  </Provider>
+ 
   </>
 }
 
