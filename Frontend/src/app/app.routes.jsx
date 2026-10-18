@@ -6,6 +6,8 @@ import Dashboard from "../features/products/pages/Dashboard"
 import Protected from "../features/auth/componets/Protected"
 import Home from "../features/products/pages/Home"
 import ProductDetail from "../features/products/pages/ProductDetail"
+import SellerProductDetails from "../features/products/pages/SellerProductDetails"
+import Cart from "../features/cart/pages/Cart"
 export const routes=createBrowserRouter([
     {
         path:"/",
@@ -24,6 +26,10 @@ export const routes=createBrowserRouter([
         element:<ProductDetail/>
     },
     {
+        path:"/cart",
+        element:<Cart/>
+    },
+    {
         path:"/seller",
         children:[
             {
@@ -33,6 +39,10 @@ export const routes=createBrowserRouter([
             {
                 path:"/seller/dashboard",
                 element: <Protected role="seller">  <Dashboard/>  </Protected>
+            },
+            {
+                path:"/seller/product/:id",
+                element:<Protected role="seller"> <SellerProductDetails/></Protected>
             }
         ]
     },

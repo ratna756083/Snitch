@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { useSelector } from 'react-redux'
 import { useProduct } from '../hook/useProduct'
+import { useNavigate } from 'react-router'
 
 const EMPTY_PRODUCTS = []
 
@@ -26,6 +27,7 @@ const sortOptions = [
 ]
 
 const Dashboard = () => {
+  const navigate=useNavigate()
   const { handelGetSellerproducts } = useProduct()
   const getSellerProducts = useRef(handelGetSellerproducts)
   const sellerProducts = useSelector((state) => state.product.sellerProducts)
@@ -286,7 +288,10 @@ const Dashboard = () => {
             <div className={`mx-auto grid max-w-260 ${gridClass} gap-x-4 gap-y-7 bg-white`}>
               {visibleProducts.map((product) => (
                 <article key={product._id} className="min-w-0 bg-white">
-                  <div className="group relative aspect-4/5 overflow-hidden bg-[#f2f2f2]">
+                  <div onClick={()=>{
+                    navigate(`/seller/product/${product._id}`)
+                  }}
+                   className="group relative aspect-4/5 overflow-hidden bg-[#f2f2f2]">
                     {product.images?.[0]?.url ? (
                       <img
                         src={product.images[0].url}

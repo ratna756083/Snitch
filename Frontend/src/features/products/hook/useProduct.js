@@ -1,5 +1,5 @@
 import { setSellerProducts,setProducts } from "../state/product.slice"
-import { createProduct, getSellerProducts ,getAllProducts,getProductDetail} from "../service/product.api"
+import { createProduct, getSellerProducts ,getAllProducts,getProductDetail,addProductVariant} from "../service/product.api"
 import { useDispatch } from "react-redux"
 
 export const useProduct = () => {
@@ -23,11 +23,18 @@ export const useProduct = () => {
         const data=await getProductDetail(Id)
         return data.product
     }
+    async function handelAddProductvariant(productId,addNewVariant){
+        const data=await addProductVariant(productId,addNewVariant)
+        return data
+    }
 
+    
     return {
         handelCreateProduct,
         handelGetSellerproducts,
         handelGetAllProducts,
-        handelGetProductDetail
+        handelGetProductDetail,
+        handelAddProductvariant
+        
     }
 }

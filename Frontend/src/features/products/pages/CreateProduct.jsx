@@ -164,7 +164,7 @@ export default function CreateProduct() {
 
       setSuccessMessage('Product created successfully!')
       setTimeout(() => {
-        navigate('/')
+        navigate('/seller/dashboard')
       }, 1400)
     } catch (err) {
       console.error(err)

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { useSelector } from 'react-redux'
 import { useProduct } from '../hook/useProduct'
+import { useCart } from '../../cart/hook/useCart'
 
 const EMPTY_PRODUCTS = []
 
@@ -15,7 +16,10 @@ const formatPrice = (amount, currency = 'INR') =>
 const Home = () => {
   const { handelGetAllProducts } = useProduct()
   const getAllProducts = useRef(handelGetAllProducts)
+  const { handelGetCart } = useCart()
+  const getCart = useRef(handelGetCart)
   const products = useSelector((state) => state.product.products)
+  const cartItems = useSelector((state) => state.cart?.items || EMPTY_PRODUCTS)
   const user = useSelector((state) => state.auth.user)
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState('newest')
@@ -38,10 +42,17 @@ const Home = () => {
         if (isMounted) setIsLoading(false)
       })
 
+    getCart.current().catch(() => {})
+
     return () => {
       isMounted = false
     }
   }, [])
+
+  const totalCartCount = useMemo(() => {
+    if (!Array.isArray(cartItems)) return 0
+    return cartItems.reduce((acc, item) => acc + (Number(item.quantity) || 1), 0)
+  }, [cartItems])
 
   const allProducts = Array.isArray(products) ? products : EMPTY_PRODUCTS
   const visibleProducts = useMemo(() => {
@@ -108,6 +119,35 @@ const Home = () => {
                 <path d="m15.5 15.5 4.2 4.2" />
               </svg>
             </a>
+
+            {/* Shopping Cart Icon */}
+            <Link
+              to="/cart"
+              aria-label="Shopping Cart"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-[#f4f4f0]"
+              title="Shopping Cart"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-5 w-5 text-[#171717]"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.7"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                />
+              </svg>
+              {totalCartCount > 0 && (
+                <span className="absolute top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#171717] px-1 text-[10px] font-bold text-white shadow-xs">
+                  {totalCartCount}
+                </span>
+              )}
+            </Link>
+
             {user ? (
               <span
                 className="max-w-32 truncate text-xs font-semibold sm:max-w-52 sm:text-sm"
@@ -253,7 +293,7 @@ const Home = () => {
                   <div className="flex items-start justify-between gap-2 pt-3.5 sm:pt-4">
                     <div className="min-w-0">
                       <h3 className="truncate text-sm font-semibold sm:text-base">{product.title || 'Untitled product'}</h3>
-                      <p className="mt-1 line-clamp-2 text-xs leading-5 text-[#777] sm:text-sm">
+                      <p className="mt-2 line-clamp-2 text-[15px] leading-6 text-[#626262] sm:text-base sm:leading-7">
                         {product.description || 'A new find from the collection.'}
                       </p>
                     </div>
