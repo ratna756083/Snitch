@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { useProduct } from '../hook/useProduct'
-import { useNavigate } from 'react-router'
+import { useAuth } from '../../auth/hooks/useAuth'
 
 const EMPTY_PRODUCTS = []
 
@@ -27,17 +27,32 @@ const sortOptions = [
 ]
 
 const Dashboard = () => {
-  const navigate=useNavigate()
+  const { handelLogout } = useAuth()
+  const navigate = useNavigate()
   const { handelGetSellerproducts } = useProduct()
   const getSellerProducts = useRef(handelGetSellerproducts)
   const sellerProducts = useSelector((state) => state.product.sellerProducts)
+  const user = useSelector((state) => state.auth?.user)
   const [search, setSearch] = useState('')
   const [showSearch, setShowSearch] = useState(false)
   const [showSort, setShowSort] = useState(false)
   const [sortBy, setSortBy] = useState('newest')
   const [singleColumn, setSingleColumn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
   const [error, setError] = useState('')
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      await handelLogout()
+      navigate('/login')
+    } catch (logoutError) {
+      console.error('Logout failed:', logoutError)
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
 
   useEffect(() => {
     let isMounted = true
@@ -124,7 +139,9 @@ const Dashboard = () => {
       `}</style>
 
       <header className="sticky top-0 z-30 border-b border-[#e9e9e9] bg-white">
-        <div className="mx-auto flex h-15.5 max-w-360 items-center justify-between px-4 sm:h-18 sm:px-8">
+        <div className="relative mx-auto flex h-15.5 max-w-360 items-center justify-between px-4 sm:h-18 sm:px-8">
+          <div />
+
           <Link
             to="/seller/dashboard"
             aria-label="Snitch seller dashboard"
@@ -133,7 +150,7 @@ const Dashboard = () => {
             SNITCH
           </Link>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               type="button"
               aria-label={showSearch ? 'Close product search' : 'Search products'}
@@ -141,17 +158,30 @@ const Dashboard = () => {
                 setShowSearch((visible) => !visible)
                 setShowSort(false)
               }}
-              className="flex h-10 w-7 items-center justify-center"
+              className="flex h-10 w-8 items-center justify-center text-[#171717] transition-opacity hover:opacity-70"
             >
               <Icon name={showSearch ? 'close' : 'search'} />
             </button>
             <Link
               to="/seller/create-product"
               aria-label="Add product to your store"
-              className="flex h-10 w-7 items-center justify-center"
+              className="flex h-10 w-8 items-center justify-center text-[#171717] transition-opacity hover:opacity-70"
             >
               <Icon name="add" />
             </Link>
+            <button
+              type="button"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              aria-label="Log out"
+              title="Log out"
+              className="flex items-center gap-1.5 rounded-full border border-[#f3caca] bg-[#fff5f5] px-2.5 py-1.5 text-xs font-semibold text-[#c45a5a] shadow-xs transition duration-200 hover:border-[#e9aaaa] hover:bg-[#fde8e8] hover:text-[#a83232] active:scale-95 disabled:opacity-50 sm:px-3.5"
+            >
+              <Icon name="logout" className="text-[18px]" />
+              <span className="hidden sm:inline">
+                {isLoggingOut ? 'Logging out...' : 'Logout'}
+              </span>
+            </button>
           </div>
         </div>
 
@@ -175,10 +205,16 @@ const Dashboard = () => {
       <section className="mx-auto max-w-360">
         <div className="flex items-end justify-between gap-4 px-4 pb-3 pt-6 sm:px-8 sm:pt-8">
           <div>
-            <h1 className="text-[24px] font-semibold tracking-[-0.04em] sm:text-[30px]">
-              PRODUCTS
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-[24px] font-semibold tracking-[-0.04em] sm:text-[30px]">
+                PRODUCTS
+              </h1>
+              <span className="rounded bg-[#f4f4f0] px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider text-[#666]">
+                Seller
+              </span>
+            </div>
             <p className="mt-1 text-[11px] text-[#777]">
+              {user?.fullname ? `Welcome, ${user.fullname} • ` : ''}
               {isLoading
                 ? 'Loading your listings'
                 : `${products.length} ${products.length === 1 ? 'product' : 'products'} in your store`}
@@ -354,7 +390,7 @@ const Dashboard = () => {
 
       <nav
         aria-label="Seller navigation"
-        className="fixed inset-x-0 bottom-0 z-30 flex h-17 items-center justify-center gap-14 border-t border-[#e9e9e9] bg-white/95 px-4 backdrop-blur sm:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 flex h-17 items-center justify-around border-t border-[#e9e9e9] bg-white/95 px-4 backdrop-blur sm:hidden"
       >
         <Link
           to="/seller/dashboard"
@@ -371,6 +407,15 @@ const Dashboard = () => {
           <Icon name="add_box" className="text-[21px]" />
           <span className="text-[9px]">Add product</span>
         </Link>
+        <button
+          type="button"
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+          className="flex min-w-16 flex-col items-center gap-1 text-[#c45a5a] disabled:opacity-50"
+        >
+          <Icon name="logout" className="text-[21px]" />
+          <span className="text-[9px]">{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
+        </button>
       </nav>
     </main>
   )

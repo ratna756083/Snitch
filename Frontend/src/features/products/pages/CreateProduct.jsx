@@ -184,30 +184,39 @@ export default function CreateProduct() {
 
   return (
     <>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet"
+      />
+
       <style>{`
-        /* Custom scrollbars matching Stitch screen */
         ::-webkit-scrollbar {
           width: 6px;
           height: 6px;
         }
         ::-webkit-scrollbar-track {
-          background: #111214;
+          background: #141414;
         }
         ::-webkit-scrollbar-thumb {
-          background: #2C2E35;
+          background: #262626;
           border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-          background: #F59E0B;
+          background: #c6f337;
         }
         .card-glow-subtle {
-          box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.05), 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 0 1px rgba(198, 243, 55, 0.05), 0 4px 20px -2px rgba(0, 0, 0, 0.5);
         }
       `}</style>
 
-      <div className="bg-[#0C0D0E] text-neutral-200 font-sans min-h-screen flex flex-col antialiased selection:bg-[#F59E0B] selection:text-black">
+      <div
+        className="flex min-h-screen flex-col bg-black font-sans text-neutral-200 antialiased selection:bg-[#c6f337] selection:text-black"
+        style={{ fontFamily: 'Inter, sans-serif' }}
+      >
         {/* BEGIN: TopHeader */}
-        <header className="sticky top-0 z-40 bg-[#111214]/90 backdrop-blur-md border-b border-[#23252A] px-6 py-3.5 flex items-center justify-between">
+        <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#262626] bg-[#141414]/90 px-4 py-3.5 backdrop-blur-md sm:px-6">
           {/* Brand & Breadcrumbs */}
           <div className="flex items-center space-x-4">
             <div
@@ -215,14 +224,17 @@ export default function CreateProduct() {
               className="flex items-center space-x-3 cursor-pointer group"
             >
               {/* Logo Icon badge */}
-              <div className="w-8 h-8 rounded-lg bg-[#F59E0B] flex items-center justify-center font-extrabold text-[#0C0D0E] text-lg shadow-md shadow-amber-500/20">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#c6f337] text-lg font-extrabold text-black shadow-md shadow-[#c6f337]/20">
                 S
               </div>
               <div className="flex flex-col">
-                <span className="text-xs font-black tracking-wider uppercase text-white leading-none">
+                <span className="text-xs font-black uppercase leading-none tracking-wider text-white">
                   SNITCH
                 </span>
-                <span className="text-[9px] font-semibold tracking-widest uppercase text-amber-500/90 leading-tight">
+                <span
+                  className="text-[9px] font-semibold uppercase leading-tight tracking-widest text-[#c6f337]/90"
+                  style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                >
                   SELLER STUDIO
                 </span>
               </div>
@@ -231,10 +243,10 @@ export default function CreateProduct() {
             {/* Breadcrumbs */}
             <nav
               aria-label="Breadcrumb"
-              className="hidden sm:flex items-center space-x-2 text-xs text-neutral-400 font-medium pl-2 border-l border-[#2C2E35]"
+              className="hidden items-center space-x-2 border-l border-[#262626] pl-2 text-xs font-medium text-neutral-400 sm:flex"
             >
               <span className="text-neutral-500">/</span>
-              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }} className="hover:text-neutral-200 transition-colors">
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }} className="transition-colors hover:text-neutral-200">
                 Catalog
               </a>
               <span className="text-neutral-500">/</span>
@@ -243,7 +255,7 @@ export default function CreateProduct() {
           </div>
 
           {/* Top Action Buttons */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-1 sm:gap-3">
             <button
               type="button"
               onClick={() => {
@@ -256,7 +268,7 @@ export default function CreateProduct() {
                 setImages([])
                 setErrorMessage('')
               }}
-              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-400 hover:text-neutral-100 hover:bg-[#1B1C20] border border-transparent hover:border-[#2C2E35] transition-all duration-150 cursor-pointer"
+              className="cursor-pointer rounded-lg border border-transparent px-3.5 py-2 text-xs font-semibold text-neutral-400 transition-all duration-150 hover:border-[#262626] hover:bg-[#141414] hover:text-neutral-100"
             >
               Reset
             </button>
@@ -264,7 +276,8 @@ export default function CreateProduct() {
               type="button"
               disabled={isSubmitting}
               onClick={handleSubmit}
-              className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-lg bg-[#FBBF24] hover:bg-[#F59E0B] text-[#0C0D0E] text-xs font-bold transition-all duration-150 shadow-sm shadow-amber-500/30 active:scale-95 cursor-pointer disabled:opacity-50"
+              className="inline-flex cursor-pointer items-center space-x-1.5 rounded-lg border border-white bg-white px-3 py-2 text-xs font-bold text-black shadow-[2px_2px_0px_#c6f337] transition-all duration-150 hover:bg-[#e4e4e7] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 sm:px-4"
+              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
             >
               {isSubmitting ? (
                 <span>Publishing...</span>
@@ -281,26 +294,36 @@ export default function CreateProduct() {
         </header>
 
         {/* BEGIN: MainContent */}
-        <main className="flex-1 max-w-[1560px] w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6 pb-28">
+        <main className="mx-auto w-full max-w-[1320px] flex-1 space-y-6 p-4 pb-28 sm:p-6 lg:p-8">
           {/* Title and Status Tag */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <h1 className="text-2xl font-bold tracking-tight text-white">Create Product</h1>
-              <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-[#FBBF24] border border-amber-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                <span>Draft Listing</span>
-              </span>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div className="mb-2 flex flex-wrap items-center gap-3">
+                <h1
+                  className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl"
+                  style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
+                >
+                  Create a listing
+                </h1>
+                <span className="inline-flex items-center space-x-1 rounded-full border border-[#c6f337]/20 bg-[#c6f337]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#c6f337]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c6f337] animate-pulse" />
+                  <span>New listing</span>
+                </span>
+              </div>
+              <p className="text-sm text-neutral-400">
+                Add the details and photos buyers need to discover your product.
+              </p>
             </div>
 
             {/* Error or Success Toast */}
             {errorMessage && (
-              <div className="px-3 py-1 rounded-lg text-xs flex items-center space-x-2 bg-red-500/10 border border-red-500/30 text-red-400">
+              <div role="alert" className="flex items-center space-x-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
                 <span>{errorMessage}</span>
                 <button type="button" onClick={() => setErrorMessage('')} className="ml-1 hover:text-white">✕</button>
               </div>
             )}
             {successMessage && (
-              <div className="px-3 py-1 rounded-lg text-xs flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">
+              <div role="status" className="flex items-center space-x-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-400">
                 <span>{successMessage}</span>
               </div>
             )}
@@ -309,20 +332,20 @@ export default function CreateProduct() {
           {/* Main Form Grid Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* BEGIN: LeftColumn (Basic Information + Spaced Pricing Section) */}
-            <section aria-label="Product Details and Pricing" className="lg:col-span-6 xl:col-span-6 flex flex-col gap-8">
+            <section aria-label="Product Details and Pricing" className="flex flex-col gap-6 lg:col-span-6 xl:col-span-6">
               {/* BEGIN: BasicInformationCard */}
-              <article className="bg-[#111214] border border-[#23252A] rounded-xl p-5 sm:p-6 card-glow-subtle transition-all">
+              <article className="bg-[#141414] border border-[#262626] rounded-xl p-5 sm:p-6 card-glow-subtle transition-all">
                 {/* Card Header */}
-                <div className="flex items-center justify-between pb-4 border-b border-[#1B1C20] mb-5">
+                <div className="flex items-center justify-between pb-4 border-b border-[#262626] mb-5">
                   <div className="flex items-center space-x-2 text-white font-bold text-sm tracking-wide">
-                    <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-[#c6f337]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path d="M3.75 6.75h16.5M3.75 12h10.5m-10.5 5.25h16.5" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
                     </svg>
                     <h2 className="uppercase text-xs font-extrabold tracking-wider text-neutral-100">
                       Basic Information
                     </h2>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#1B1C20] text-neutral-400 border border-[#23252A]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#141414] text-neutral-400 border border-[#262626]">
                     01
                   </span>
                 </div>
@@ -333,14 +356,14 @@ export default function CreateProduct() {
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <label className="text-xs font-bold text-neutral-300 uppercase tracking-wider flex items-center" htmlFor="product-title">
-                        Product Title <span className="text-amber-500 ml-1">*</span>
+                        Product Title <span className="text-[#c6f337] ml-1">*</span>
                       </label>
                       <span className="text-[11px] font-mono text-neutral-500">
                         {form.title.length}/100
                       </span>
                     </div>
                     <input
-                      className="w-full bg-[#16171A] text-neutral-100 text-sm placeholder-neutral-500 rounded-lg border border-[#2C2E35] focus:border-amber-500 focus:ring-1 focus:ring-amber-500 px-3.5 py-2.5 transition-colors focus:outline-none"
+                      className="w-full bg-[#0a0a0a] text-neutral-100 text-sm placeholder-neutral-500 rounded-lg border border-[#262626] focus:border-[#c6f337] focus:ring-1 focus:ring-[#c6f337] px-3.5 py-2.5 transition-colors focus:outline-none"
                       id="product-title"
                       maxLength={100}
                       name="title"
@@ -355,7 +378,7 @@ export default function CreateProduct() {
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <label className="text-xs font-bold text-neutral-300 uppercase tracking-wider flex items-center" htmlFor="product-description">
-                        Description <span className="text-amber-500 ml-1">*</span>
+                        Description <span className="text-[#c6f337] ml-1">*</span>
                       </label>
                       <div className="flex items-center space-x-2">
                         <span className="text-[11px] font-mono text-neutral-500">
@@ -365,14 +388,14 @@ export default function CreateProduct() {
                     </div>
 
                     {/* Markdown/Rich Text Editor Box */}
-                    <div className="border border-[#2C2E35] rounded-lg overflow-hidden focus-within:border-amber-500 focus-within:ring-1 focus-within:ring-amber-500 transition-colors bg-[#16171A]">
+                    <div className="border border-[#262626] rounded-lg overflow-hidden focus-within:border-[#c6f337] focus-within:ring-1 focus-within:ring-[#c6f337] transition-colors bg-[#0a0a0a]">
                       {/* Toolbar */}
-                      <div className="flex items-center justify-between px-3 py-1.5 border-b border-[#23252A] bg-[#1B1C20] text-neutral-400 text-xs">
+                      <div className="flex items-center justify-between px-3 py-1.5 border-b border-[#262626] bg-[#141414] text-neutral-400 text-xs">
                         <div className="flex items-center space-x-1">
                           <button
                             type="button"
                             onClick={() => setForm((prev) => ({ ...prev, description: prev.description + '**bold**' }))}
-                            className="p-1 hover:text-neutral-100 hover:bg-[#23252A] rounded font-bold transition"
+                            className="p-1 hover:text-neutral-100 hover:bg-[#262626] rounded font-bold transition"
                             title="Bold"
                           >
                             B
@@ -380,16 +403,16 @@ export default function CreateProduct() {
                           <button
                             type="button"
                             onClick={() => setForm((prev) => ({ ...prev, description: prev.description + '_italic_' }))}
-                            className="p-1 hover:text-neutral-100 hover:bg-[#23252A] rounded italic transition"
+                            className="p-1 hover:text-neutral-100 hover:bg-[#262626] rounded italic transition"
                             title="Italic"
                           >
                             I
                           </button>
-                          <div className="w-px h-3.5 bg-[#2C2E35] mx-1" />
+                          <div className="w-px h-3.5 bg-[#262626] mx-1" />
                           <button
                             type="button"
                             onClick={() => setForm((prev) => ({ ...prev, description: prev.description + '\n- ' }))}
-                            className="p-1 hover:text-neutral-100 hover:bg-[#23252A] rounded flex items-center space-x-0.5 transition"
+                            className="p-1 hover:text-neutral-100 hover:bg-[#262626] rounded flex items-center space-x-0.5 transition"
                             title="List"
                           >
                             <span className="text-xs font-bold">• List</span>
@@ -397,7 +420,7 @@ export default function CreateProduct() {
                           <button
                             type="button"
                             onClick={() => setForm((prev) => ({ ...prev, description: prev.description + '\n`code`' }))}
-                            className="p-1 hover:text-neutral-100 hover:bg-[#23252A] rounded font-mono text-[11px] transition"
+                            className="p-1 hover:text-neutral-100 hover:bg-[#262626] rounded font-mono text-[11px] transition"
                             title="Code"
                           >
                             &lt;/&gt;
@@ -424,18 +447,18 @@ export default function CreateProduct() {
               </article>
 
               {/* BEGIN: PricingAndCurrencyCard */}
-              <article className="bg-[#111214] border border-[#23252A] rounded-xl p-5 sm:p-6 card-glow-subtle transition-all">
+              <article className="bg-[#141414] border border-[#262626] rounded-xl p-5 sm:p-6 card-glow-subtle transition-all">
                 {/* Card Header */}
-                <div className="flex items-center justify-between pb-4 border-b border-[#1B1C20] mb-5">
+                <div className="flex items-center justify-between pb-4 border-b border-[#262626] mb-5">
                   <div className="flex items-center space-x-2 text-white font-bold text-sm tracking-wide">
-                    <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-[#c6f337]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6H2.25m0 0v8.25m0 0h.75a.75.75 0 01.75.75v.75m0 0H18m0 0h.75a.75.75 0 00.75-.75V15m0 0H21m-3 0V6a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6v.75" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                     </svg>
                     <h2 className="uppercase text-xs font-extrabold tracking-wider text-neutral-100">
                       Pricing &amp; Currency
                     </h2>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#1B1C20] text-neutral-400 border border-[#23252A]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#141414] text-neutral-400 border border-[#262626]">
                     02
                   </span>
                 </div>
@@ -446,14 +469,14 @@ export default function CreateProduct() {
                     {/* Price Amount Input */}
                     <div className="sm:col-span-7">
                       <label className="block text-xs font-bold text-neutral-300 uppercase tracking-wider mb-2" htmlFor="price-amount">
-                        Price Amount <span className="text-amber-500">*</span>
+                        Price Amount <span className="text-[#c6f337]">*</span>
                       </label>
                       <div className="relative rounded-lg overflow-hidden">
                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-neutral-400 font-medium text-sm">
                           {CURRENCY_SYMBOLS[form.priceCurrency] || '₹'}
                         </div>
                         <input
-                          className="w-full bg-[#16171A] text-neutral-100 text-sm font-medium rounded-lg border border-[#2C2E35] pl-8 pr-3.5 py-2.5 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors focus:outline-none"
+                          className="w-full bg-[#0a0a0a] text-neutral-100 text-sm font-medium rounded-lg border border-[#262626] pl-8 pr-3.5 py-2.5 focus:border-[#c6f337] focus:ring-1 focus:ring-[#c6f337] transition-colors focus:outline-none"
                           id="price-amount"
                           name="priceAmount"
                           value={form.priceAmount}
@@ -468,11 +491,11 @@ export default function CreateProduct() {
                     {/* Currency Dropdown Selector */}
                     <div className="sm:col-span-5">
                       <label className="block text-xs font-bold text-neutral-300 uppercase tracking-wider mb-2" htmlFor="currency-selector">
-                        Currency <span className="text-amber-500">*</span>
+                        Currency <span className="text-[#c6f337]">*</span>
                       </label>
                       <div className="relative">
                         <select
-                          className="w-full bg-[#16171A] text-neutral-100 text-sm rounded-lg border border-[#2C2E35] px-3.5 py-2.5 pr-8 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 appearance-none transition-colors cursor-pointer focus:outline-none"
+                          className="w-full bg-[#0a0a0a] text-neutral-100 text-sm rounded-lg border border-[#262626] px-3.5 py-2.5 pr-8 focus:border-[#c6f337] focus:ring-1 focus:ring-[#c6f337] appearance-none transition-colors cursor-pointer focus:outline-none"
                           id="currency-selector"
                           name="priceCurrency"
                           value={form.priceCurrency}
@@ -503,7 +526,7 @@ export default function CreateProduct() {
                           name="taxes_included"
                           type="checkbox"
                           defaultChecked
-                          className="w-4 h-4 rounded bg-[#1B1C20] border-[#3D404A] text-amber-500 focus:ring-amber-500 focus:ring-offset-[#111214] focus:ring-offset-1 cursor-pointer"
+                          className="w-4 h-4 rounded bg-[#141414] border-[#3f3f46] text-[#c6f337] focus:ring-[#c6f337] focus:ring-offset-[#141414] focus:ring-offset-1 cursor-pointer"
                         />
                       </div>
                       <span className="text-xs text-neutral-300 group-hover:text-neutral-200 select-none">
@@ -517,18 +540,18 @@ export default function CreateProduct() {
 
             {/* BEGIN: RightColumn (Media & Gallery) */}
             <section aria-label="Media and Gallery Section" className="lg:col-span-6 xl:col-span-6">
-              <article className="bg-[#111214] border border-[#23252A] rounded-xl p-5 sm:p-6 card-glow-subtle h-full flex flex-col justify-between">
+              <article className="bg-[#141414] border border-[#262626] rounded-xl p-5 sm:p-6 card-glow-subtle h-full flex flex-col justify-between">
                 <div>
                   {/* Gallery Header */}
-                  <div className="flex items-center justify-between pb-4 border-b border-[#1B1C20] mb-5">
+                  <div className="flex items-center justify-between pb-4 border-b border-[#262626] mb-5">
                     <div className="flex items-center space-x-2 text-white font-bold text-sm tracking-wide">
-                      <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 text-[#c6f337]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                       </svg>
                       <h2 className="uppercase text-xs font-extrabold tracking-wider text-neutral-100">
                         Media &amp; Gallery
                       </h2>
-                      <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#1B1C20] text-amber-400 border border-[#23252A]">
+                      <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#141414] text-[#c6f337] border border-[#262626]">
                         {images.length} / {MAX_IMAGES}
                       </span>
                     </div>
@@ -542,7 +565,7 @@ export default function CreateProduct() {
                           Clear All
                         </button>
                       )}
-                      <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#1B1C20] text-neutral-400 border border-[#23252A]">
+                      <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#141414] text-neutral-400 border border-[#262626]">
                         03
                       </span>
                     </div>
@@ -574,14 +597,14 @@ export default function CreateProduct() {
                     }}
                     className={`border border-dashed rounded-xl p-5 text-center transition-all duration-200 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 cursor-pointer ${
                       isDragging
-                        ? 'border-amber-400 bg-amber-500/10'
+                        ? 'border-[#c6f337] bg-[#c6f337]/10'
                         : images.length >= MAX_IMAGES
-                        ? 'border-[#2C2E35] bg-[#16171A]/40 opacity-60 cursor-not-allowed'
-                        : 'border-[#2C2E35] hover:border-amber-500/50 bg-[#16171A]/60'
+                        ? 'border-[#262626] bg-[#0a0a0a]/40 opacity-60 cursor-not-allowed'
+                        : 'border-[#262626] hover:border-[#c6f337]/50 bg-[#0a0a0a]/60'
                     }`}
                   >
                     <div className="flex items-center space-x-3.5 text-left">
-                      <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 flex-shrink-0">
+                      <div className="w-10 h-10 rounded-lg bg-[#c6f337]/10 border border-[#c6f337]/20 flex items-center justify-center text-[#c6f337] flex-shrink-0">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                         </svg>
@@ -600,7 +623,7 @@ export default function CreateProduct() {
                     {images.length < MAX_IMAGES && (
                       <button
                         type="button"
-                        className="px-3.5 py-1.5 rounded-lg bg-[#23252A] hover:bg-[#2C2E35] text-neutral-200 text-xs font-semibold border border-[#3D404A] transition whitespace-nowrap cursor-pointer"
+                        className="px-3.5 py-1.5 rounded-lg bg-[#262626] hover:bg-[#262626] text-neutral-200 text-xs font-semibold border border-[#3f3f46] transition whitespace-nowrap cursor-pointer"
                       >
                         Browse Files
                       </button>
@@ -615,8 +638,8 @@ export default function CreateProduct() {
                         key={item.id}
                         className={`relative group aspect-square rounded-lg overflow-hidden shadow-md flex flex-col justify-between p-2 transition-all ${
                           index === 0
-                            ? 'border-2 border-amber-500/80 bg-[#16171A]'
-                            : 'border border-[#2C2E35] bg-[#16171A]'
+                            ? 'border-2 border-[#c6f337]/80 bg-[#0a0a0a]'
+                            : 'border border-[#262626] bg-[#0a0a0a]'
                         }`}
                       >
                         <img
@@ -628,11 +651,11 @@ export default function CreateProduct() {
                         {/* Slot Badge */}
                         <div className="relative z-10 flex justify-between items-start">
                           {index === 0 ? (
-                            <span className="bg-[#FBBF24] text-[#0C0D0E] text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm">
+                            <span className="bg-[#c6f337] text-[#000000] text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm">
                               Cover
                             </span>
                           ) : (
-                            <div className="w-5 h-5 rounded bg-blue-500/80 text-[10px] flex items-center justify-center text-white font-bold">
+                            <div className="w-5 h-5 rounded bg-[#c6f337]/80 text-[10px] flex items-center justify-center text-white font-bold">
                               #{index + 1}
                             </div>
                           )}
@@ -644,7 +667,7 @@ export default function CreateProduct() {
                             <button
                               type="button"
                               onClick={() => handleSetCover(index)}
-                              className="p-1.5 rounded bg-[#1B1C20] text-amber-400 hover:text-amber-300 border border-amber-500/30"
+                              className="p-1.5 rounded bg-[#141414] text-[#c6f337] hover:text-[#c6f337] border border-[#c6f337]/30"
                               title="Make Cover"
                             >
                               ★
@@ -654,7 +677,7 @@ export default function CreateProduct() {
                             <button
                               type="button"
                               onClick={() => handleMoveImage(index, index - 1)}
-                              className="p-1.5 rounded bg-[#1B1C20] text-white hover:text-amber-400 border border-[#2C2E35]"
+                              className="p-1.5 rounded bg-[#141414] text-white hover:text-[#c6f337] border border-[#262626]"
                               title="Move Left"
                             >
                               ←
@@ -664,7 +687,7 @@ export default function CreateProduct() {
                             <button
                               type="button"
                               onClick={() => handleMoveImage(index, index + 1)}
-                              className="p-1.5 rounded bg-[#1B1C20] text-white hover:text-amber-400 border border-[#2C2E35]"
+                              className="p-1.5 rounded bg-[#141414] text-white hover:text-[#c6f337] border border-[#262626]"
                               title="Move Right"
                             >
                               →
@@ -673,7 +696,7 @@ export default function CreateProduct() {
                           <button
                             type="button"
                             onClick={() => handleRemoveImage(item.id)}
-                            className="p-1.5 rounded bg-[#1B1C20] text-red-400 hover:text-red-300 border border-red-500/30"
+                            className="p-1.5 rounded bg-[#141414] text-red-400 hover:text-red-300 border border-red-500/30"
                             title="Delete Image"
                           >
                             ✕
@@ -696,7 +719,7 @@ export default function CreateProduct() {
                         <div
                           key={`empty-slot-${slotIdx}`}
                           onClick={() => fileInputRef.current?.click()}
-                          className="aspect-square rounded-lg border border-dashed border-[#23252A] hover:border-[#3D404A] hover:border-amber-500/40 bg-[#16171A]/40 flex flex-col items-center justify-center p-3 text-neutral-500 hover:text-neutral-400 cursor-pointer transition group"
+                          className="aspect-square rounded-lg border border-dashed border-[#262626] hover:border-[#3f3f46] hover:border-[#c6f337]/40 bg-[#0a0a0a]/40 flex flex-col items-center justify-center p-3 text-neutral-500 hover:text-neutral-400 cursor-pointer transition group"
                         >
                           <svg className="w-5 h-5 mb-1 stroke-1 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M12 4.5v15m7.5-7.5h-15" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
@@ -711,9 +734,9 @@ export default function CreateProduct() {
                 </div>
 
                 {/* Helper tip footer inside media card */}
-                <div className="mt-8 pt-4 border-t border-[#1B1C20] text-[11px] text-neutral-400 flex items-center justify-between">
+                <div className="mt-8 pt-4 border-t border-[#262626] text-[11px] text-neutral-400 flex items-center justify-between">
                   <span className="flex items-center space-x-1.5">
-                    <svg className="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3.5 h-3.5 text-[#c6f337]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                     </svg>
                     <span>High resolution photos boost conversion by 34%</span>
@@ -726,8 +749,8 @@ export default function CreateProduct() {
         </main>
 
         {/* BEGIN: StickyBottomBar */}
-        <aside className="fixed bottom-0 inset-x-0 bg-[#111214]/95 backdrop-blur-md border-t border-[#23252A] px-6 py-3.5 z-40">
-          <div className="max-w-[1560px] mx-auto flex items-center justify-between">
+        <aside className="fixed inset-x-0 bottom-0 z-40 border-t border-[#262626] bg-[#141414]/95 px-4 py-3.5 backdrop-blur-md sm:px-6">
+          <div className="mx-auto flex max-w-[1320px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             {/* Pipeline Status Indicator */}
             <div className="flex items-center space-x-2 text-xs font-medium">
               <span className="relative flex h-2 w-2">
@@ -735,17 +758,17 @@ export default function CreateProduct() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
               <span className="text-neutral-300">Pipeline:</span>
-              <span className="font-mono text-amber-400 font-bold">
+              <span className="font-mono text-[#c6f337] font-bold">
                 {images.length} / {MAX_IMAGES} images staged
               </span>
             </div>
 
             {/* Action CTAs */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center justify-end space-x-3">
               <button
                 type="button"
-                onClick={() => navigate('/')}
-                className="px-4 py-2 rounded-lg text-xs font-semibold text-neutral-400 hover:text-white hover:bg-[#1B1C20] transition cursor-pointer"
+                onClick={() => navigate('/seller/dashboard')}
+                className="px-4 py-2 rounded-lg text-xs font-semibold text-neutral-400 hover:text-white hover:bg-[#141414] transition cursor-pointer"
               >
                 Discard
               </button>
@@ -753,7 +776,8 @@ export default function CreateProduct() {
                 type="button"
                 disabled={isSubmitting}
                 onClick={handleSubmit}
-                className="inline-flex items-center space-x-2 px-5 py-2 rounded-lg bg-[#FBBF24] hover:bg-[#F59E0B] text-[#0C0D0E] text-xs font-extrabold tracking-wide shadow-md shadow-amber-500/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                className="inline-flex cursor-pointer items-center space-x-2 rounded-lg border border-white bg-white px-5 py-2 text-xs font-extrabold tracking-wide text-black shadow-[2px_2px_0px_#c6f337] transition-all hover:bg-[#e4e4e7] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
               >
                 {isSubmitting ? (
                   <span>Publishing...</span>
