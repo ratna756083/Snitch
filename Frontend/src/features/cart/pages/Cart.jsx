@@ -2,6 +2,10 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router'
 import { useSelector } from 'react-redux'
 import { useCart } from '../hook/useCart'
+import { useRazorpay } from "react-razorpay";
+import { useNavigate } from 'react-router';
+
+
 
 const formatPrice = (amount, currency = 'INR') =>
   new Intl.NumberFormat('en-IN', {
@@ -17,11 +21,14 @@ const normalizeAttributes = (attributes) => {
   return typeof attributes === 'object' ? attributes : {}
 }
 
+
+
 const Cart = () => {
+  const navigate=useNavigate()
   const cart = useSelector((state) => state.cart)
   const cartItems = useMemo(() => (Array.isArray(cart?.items) ? cart.items : []), [cart?.items])
   const cartCurrency = cart?.currency || 'INR'
-  const { handelGetCart, handelRemoveItem,handelIncrementCartItem ,handelDecrementCartItem} = useCart()
+  const { handelGetCart, handelRemoveItem,handelIncrementCartItem ,handelDecrementCartItem,handelCreateOrderPayment,handelVerifyCartPayment} = useCart()
 
   const [isLoading, setIsLoading] = useState(true)
   const [wishlistSaved, setWishlistSaved] = useState({})
@@ -58,6 +65,45 @@ const Cart = () => {
       ...prev,
       [itemId]: !prev[itemId],
     }))
+  }
+
+  const user=useSelector(state=>state.auth.user)
+
+ const { Razorpay } = useRazorpay();
+
+  const handlePayment =async () => {
+   
+    const order=await handelCreateOrderPayment()
+    console.log(order)
+
+    const options= {
+      key: "rzp_test_TpUDFMV74PWPw8",
+      amount: order.amount, // Amount in paise
+      currency: order.currency,
+      name: "Snitch",
+      description: "Test Transaction",
+      order_id: order.id, // Generate order_id on server
+      handler:async (response) => {
+       const isValid= await handelVerifyCartPayment(response)
+       if(isValid){
+        const orderedItems = cartItems
+        await handelGetCart()
+        navigate(`/order-success?order_id=${response.razorpay_order_id}`, {
+          state: { orderedItems },
+        })
+       }
+      },
+      prefill: {
+        name: user.fullname,
+        email: user.email,
+        contact: user.contact,
+      },
+      theme: {
+        color: "#F37254",
+      },
+    };
+    const razorpayInstance = new Razorpay(options);
+    razorpayInstance.open();
   }
   return (
     <main
@@ -488,7 +534,7 @@ const Cart = () => {
                 {/* Primary CTA Checkout Button */}
                 <button
                   type="button"
-                  onClick={() => alert('Proceeding to checkout with order total: ' + formatPrice(grandTotal))}
+                  onClick={handlePayment}
                   className="w-full rounded-full bg-[#171717] hover:bg-[#333] active:scale-[0.98] py-4 px-6 text-xs sm:text-sm font-bold uppercase tracking-[0.14em] text-white flex items-center justify-center gap-2 transition-all shadow-md"
                 >
                   <span>Proceed to Checkout</span>

@@ -8,6 +8,7 @@ import Home from "../features/products/pages/Home"
 import ProductDetail from "../features/products/pages/ProductDetail"
 import SellerProductDetails from "../features/products/pages/SellerProductDetails"
 import Cart from "../features/cart/pages/Cart"
+import OrderSuccess from "../features/cart/pages/OrderSuccess"
 export const routes=createBrowserRouter([
     {
         path:"/",
@@ -28,6 +29,10 @@ export const routes=createBrowserRouter([
     {
         path:"/cart",
         element:<Cart/>
+    },
+    {
+        path:"/order-success",
+        element:<OrderSuccess/>
     },
     {
         path:"/seller",

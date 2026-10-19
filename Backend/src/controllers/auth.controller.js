@@ -1,6 +1,7 @@
 import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken"
 import { config } from "../config/config.js"
+import redis from "../config/cache.js";
 function sendToken(user,res,message,stCode){
     const token=jwt.sign({
         id:user._id
@@ -116,6 +117,18 @@ export async function getMe(req,res){
             fullname:user.fullname,
             role:user.role
         }
+    })
+}
+
+export const logout=async(req,res)=>{
+    const token=req.cookies.token
+   
+
+    res.clearCookie("token")
+  await  redis.set(token,Date.now().toString(),"EX",60*60)
+
+    res.status(200).json({
+        message:"logout successfull"
     })
 }
 

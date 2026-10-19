@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { useSelector } from 'react-redux'
 import { useProduct } from '../hook/useProduct'
 import { useCart } from '../../cart/hook/useCart'
+import { useAuth } from '../../auth/hooks/useAuth'
 
 const EMPTY_PRODUCTS = []
 
@@ -14,6 +15,7 @@ const formatPrice = (amount, currency = 'INR') =>
   }).format(Number(amount) || 0)
 
 const Home = () => {
+  const {handelLogout}=useAuth()
   const { handelGetAllProducts } = useProduct()
   const getAllProducts = useRef(handelGetAllProducts)
   const { handelGetCart } = useCart()
@@ -149,12 +151,14 @@ const Home = () => {
             </Link>
 
             {user ? (
-              <span
-                className="max-w-32 truncate text-xs font-semibold sm:max-w-52 sm:text-sm"
-                title={user.fullname || user.email}
-              >
-                Hi, {user.fullname || user.email}
-              </span>
+              <>
+                <span
+                  className="max-w-32 truncate text-xs font-semibold sm:max-w-52 sm:text-sm"
+                  title={user.fullname || user.email}
+                >
+                  Hi, {user.fullname || user.email}
+                </span>
+              </>
             ) : (
               <Link
                 to="/login"
@@ -169,6 +173,30 @@ const Home = () => {
             >
               Sell with us
             </Link>
+            {user && (
+              <button
+                type="button"
+                onClick={handelLogout}
+                aria-label="Log out"
+                title="Log out"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#f3caca] bg-[#fff5f5] text-[#c45a5a] shadow-sm transition duration-200 hover:border-[#e9aaaa] hover:bg-[#fde8e8] hover:text-[#a83232] hover:shadow-md active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d87878]"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M10 17l5-5-5-5" />
+                  <path d="M15 12H3" />
+                  <path d="M12 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5" />
+                </svg>
+              </button>
+            )}
           </div>
         </div>
       </header>

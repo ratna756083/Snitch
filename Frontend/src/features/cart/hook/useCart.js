@@ -1,5 +1,5 @@
-import { addItem as addItemToCart, rollbackAddItem, setCart } from "../state/cart.slice";
-import { addItem, getCart,incrementCartItemApi ,decrementCartItemapi,deleteCartItem} from "../service/cart.api"
+import { addItem as addItemToCart, rollbackAddItem, setCart} from "../state/cart.slice";
+import { addItem, getCart,incrementCartItemApi ,decrementCartItemapi,deleteCartItem,craeteOrderPayment,verifyCartPayment} from "../service/cart.api"
 import { useDispatch } from 'react-redux'
 
 export const useCart = () => {
@@ -44,11 +44,21 @@ export const useCart = () => {
         await decrementCartItemapi({productId,variantId})
         await handelGetCart()
     }
+    async function handelCreateOrderPayment(){
+    const data=  await craeteOrderPayment()
+    return data.order
+    }
+    async function handelVerifyCartPayment({razorpay_order_id,razorpay_payment_id,razorpay_signature}){
+        const data=await verifyCartPayment({razorpay_order_id,razorpay_payment_id,razorpay_signature})
+        return data.success
+    }
     return {
         handelAddItem,
         handelGetCart,
         handelRemoveItem,
         handelIncrementCartItem,
-        handelDecrementCartItem
+        handelDecrementCartItem,
+        handelCreateOrderPayment,
+        handelVerifyCartPayment
     }
 }

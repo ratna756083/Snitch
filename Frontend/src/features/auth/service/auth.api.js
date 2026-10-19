@@ -18,3 +18,7 @@ export async function getMe(){
     const responce=await api.get("/get-me")
     return responce.data
 }
+export async function logout(){
+    const response=await api.delete("/logout")
+    return response.data
+}
