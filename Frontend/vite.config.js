@@ -15,5 +15,10 @@ export default defineConfig({
         secure:false
       }
     }
-  }
+  },
+   preview: {
+    host: "0.0.0.0",
+    port: Number(process.env.PORT) || 4173,
+    allowedHosts: ["snitch-5-rh0t.onrender.com"],
+  },
 })
