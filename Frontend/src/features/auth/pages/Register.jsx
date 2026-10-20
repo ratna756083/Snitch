@@ -533,7 +533,7 @@ const Register = () => {
               <button
                 type="button"
                 onClick={() => {
-                  window.location.href = 'https://snitch-3p82.onrender.com/api/auth/google'
+                  window.location.href = '/api/auth/google'
                 }}
                 className="w-full bg-[#0a0a0a] hover:bg-[#18181b] border border-[#262626] hover:border-[#3f3f46] text-white py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-colors duration-150 cursor-pointer shadow-[2px_2px_0px_#000000] text-xs font-semibold"
               >
