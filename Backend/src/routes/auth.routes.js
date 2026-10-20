@@ -14,7 +14,7 @@ router.get("/google",passport.authenticate("google",{scope:["profile","email"]})
 router.get("/google/callback",
     passport.authenticate("google", {
         session:false,
-        failureRedirect:"https://snitch-esqec506b-chat-apps-projects-0cd5cfb3.vercel.app/login"
+        failureRedirect:"https://snitch-azure.vercel.app//login"
     }),
         googleCallback
     )
