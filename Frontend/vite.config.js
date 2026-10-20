@@ -11,7 +11,7 @@ export default defineConfig({
    preview: {
     host: "0.0.0.0",
     port: Number(process.env.PORT) || 4173,
-    allowedHosts: ["snitch-5-t80s.onrender.com"],
+    allowedHosts: ["https://snitch-6.onrender.com"],
      proxy:{
       "/api":{
         target:"https://snitch-3p82.onrender.com",
