@@ -7,18 +7,16 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss()
   ],
-  server:{
-    proxy:{
-      "/api":{
-        target:"https://snitch-3p82.onrender.com",
-        changeOrigin:true,
-        secure:false
-      }
-    }
-  },
    preview: {
     host: "0.0.0.0",
     port: Number(process.env.PORT) || 4173,
     allowedHosts: ["snitch-5-t80s.onrender.com"],
+     proxy:{
+      "/api":{
+        target:"https://snitch-3p82.onrender.com",
+        changeOrigin:true,
+        secure:true
+      }
+    }
   },
 })
