@@ -103,7 +103,7 @@ export const  googleCallback=async (req,res)=>{
     {expiresIn:"7d"})
   res.cookie("token",token)
 
-    res.redirect("https://snitch-azure.vercel.app/")
+    res.redirect("https://nitch-5-t80s.onrender.com/")
 }
 
 export async function getMe(req,res){
