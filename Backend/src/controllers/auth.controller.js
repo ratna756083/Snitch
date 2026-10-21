@@ -7,6 +7,11 @@ function sendToken(user,res,message,stCode){
         id:user._id
     },config.JWT_SECRET,{
         expiresIn:"7d"
+    },{
+         httpOnly: true,
+         secure: true,
+         sameSite: "none",
+         maxAge: 7 * 24 * 60 * 60 * 1000
     })
     res.cookie("token",token);
 
