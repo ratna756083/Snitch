@@ -380,7 +380,7 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => {
-                  window.location.href = '/api/auth/google'
+                  window.location.href = 'https://snitch-3p82.onrender.com/api/auth/google'
                 }}
                 className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-lg border border-[#262626] bg-[#0a0a0a] px-4 py-3 text-xs font-semibold text-white shadow-[2px_2px_0px_#000000] transition-colors duration-150 hover:border-[#3f3f46] hover:bg-[#18181b]"
               >

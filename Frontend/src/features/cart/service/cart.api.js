@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const cartApi=axios.create({
-    baseURL:"/api/cart",
+    baseURL:"https://snitch-3p82.onrender.com/api/cart",
     withCredentials:true
 })
 

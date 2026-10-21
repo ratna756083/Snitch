@@ -7,11 +7,16 @@ import {Strategy as GoogleStrategy} from "passport-google-oauth20"
 import { config } from "./config/config.js"
 import productRoutes from './routes/product.routes.js'
 import cartRoutes from './routes/cart.routes.js'
-
+import cors from 'cors'
 
 
 
 const app = express();
+
+app.use(cors({
+    origin: "https://snitch-6.onrender.com",
+    credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
