@@ -64,6 +64,9 @@ export const verifySeller=async (req,res,next)=>{
         })
         }
 
+        console.log("Authenticated user:", user.email);
+        console.log("Authenticated role:", user.role);
+
         if(user.role !== "seller"){
             return res.status(403).json({message:"Forbidden"})
         }
