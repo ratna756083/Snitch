@@ -71,6 +71,9 @@ export const login=async(req,res)=>{
     const user=await userModel.findOne({
         email
     })
+     console.log("FOUND USER:", user?.email);
+        console.log("FOUND USER ID:", user?._id);
+        console.log("FOUND USER ROLE:", user?.role);
 
     if(!user){
         return res.status(400).json({
@@ -85,6 +88,7 @@ export const login=async(req,res)=>{
             message:"invalid creditial"
         })
     }
+   
 
     await sendToken(user,res,"User login successfully",200)
 }
